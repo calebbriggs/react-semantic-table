@@ -16,7 +16,7 @@
     "eject": "react-scripts eject"
   },
   "description": "React Semantic UI Table",
-  "main": "SemanticTable.js",
+  "main": "src/SemanticTable.js",
   "devDependencies": {
     "react-scripts": "1.1.4"
   },
