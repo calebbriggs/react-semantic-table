@@ -1,0 +1,37 @@
+{
+  "name": "react-semantic-table",
+  "version": "0.1.2",
+  "dependencies": {
+    "moment": "^2.22.2",
+    "react": "^16.4.1",
+    "react-csv": "^1.0.19",
+    "react-dom": "^16.4.1",
+    "semantic-ui-css": "^2.3.3",
+    "semantic-ui-react": "^0.82.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "description": "React Semantic UI Table",
+  "main": "SemanticTable.js",
+  "devDependencies": {
+    "react-scripts": "1.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebbriggs/react-semantic-table.git"
+  },
+  "keywords": [
+    "react",
+    "table"
+  ],
+  "author": "caleb briggs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/calebbriggs/react-semantic-table/issues"
+  },
+  "homepage": "https://github.com/calebbriggs/react-semantic-table#readme"
+}
