@@ -17,7 +17,8 @@ export default class SemTableHeader extends Component {
             <HeaderCell
               key={i}
               onClick={e => {
-                if (e.target.tagName !== "INPUT") tableModel.handleSort(c);
+                if (e.target.tagName !== "INPUT" && !c.blockSort)
+                  tableModel.handleSort(c);
               }}
             >
               <div style={{ paddingBottom: 8 }}>
@@ -28,7 +29,7 @@ export default class SemTableHeader extends Component {
                   />
                 ) : null}
               </div>
-              {filterable ? (
+              {filterable && !c.hidefilter ? (
                 <Form autoComplete="off">
                   <Input
                     placeholder={c.Header}
