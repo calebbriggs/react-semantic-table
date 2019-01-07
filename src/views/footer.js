@@ -49,8 +49,11 @@ export default class SemTableFooter extends Component {
             </Menu>
             <b>
               {" "}
-              &nbsp;{(page - 1) * renderedRows + 1} - {renderedRows * page} of{" "}
-              {interalData.length}
+              &nbsp;{(page - 1) * renderedRows + 1} -{" "}
+              {renderedRows * page > interalData.length
+                ? interalData.length
+                : renderedRows * page}{" "}
+              of {interalData.length}
             </b>
           </HeaderCell>
         </Row>
