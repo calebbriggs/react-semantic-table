@@ -4,7 +4,8 @@ Run
 
 example
 
-````import React, { Component } from "react";
+```
+import React, { Component } from "react";
 import SemTable from "react-semantic-table";
 <SemTable
     filterable={true}
@@ -25,5 +26,5 @@ import SemTable from "react-semantic-table";
         { Header: "state", accessor: "state" },
         { Header: "zip", accessor: "zip" }
     ]}
-/>```
-````
+/>
+```
