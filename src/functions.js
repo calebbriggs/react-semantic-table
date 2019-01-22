@@ -1,4 +1,5 @@
 import { contains } from "./helpers";
+import moment from "moment";
 //Handles the sorting of the table
 function handleSort(clickedColumn) {
   const { column, direction, interalData } = this.state;
