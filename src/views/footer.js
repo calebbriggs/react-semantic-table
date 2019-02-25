@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Table, Menu, Icon } from "semantic-ui-react";
-const { HeaderCell, Footer, Row } = Table;
 import { CSVLink } from "react-csv";
 export default class SemTableFooter extends Component {
   render() {
@@ -26,40 +24,40 @@ export default class SemTableFooter extends Component {
       return data;
     });
     return (
-      <Footer>
-        <Row>
-          <HeaderCell colSpan={columns.length}>
-            <Menu pagination>
-              <Menu.Item
-                as="a"
-                icon
+      <tfoot>
+        <tr>
+          <th colSpan={columns.length}>
+            <div class="ui pagination menu">
+              <a
+                class={`item icon ${page == 1 ? "disabled" : ""}`}
                 title="Previous Page"
-                disabled={page == 1}
                 onClick={() => {
+                  if (page == 1) return;
                   tableModel.setState({ page: page - 1 });
                 }}
               >
-                <Icon name="chevron left" />
-              </Menu.Item>
-              <Menu.Item
-                as="a"
-                icon
+                <i class="chevron left icon" aria-hidden="true" />
+              </a>
+              <a
+                class={`item icon ${
+                  page >= interalData.length / renderedRows ? "disabled" : ""
+                }`}
                 title="Next Page"
-                disabled={page >= interalData.length / renderedRows}
                 onClick={() => {
+                  if (page >= interalData.length / renderedRows) return;
                   tableModel.setState({ page: page + 1 });
                 }}
               >
-                <Icon name="chevron right" />
-              </Menu.Item>
+                <i class="chevron right icon" aria-hidden="true" />
+              </a>
               {csvExport ? (
-                <Menu.Item icon title="Excel Download">
+                <div class="item icon" title="Excel Download">
                   <CSVLink data={exportData} filename={"data.csv"}>
-                    <Icon name="file excel" />
+                    <i class="file excel icon" aria-hidden="true" />
                   </CSVLink>
-                </Menu.Item>
+                </div>
               ) : null}
-            </Menu>
+            </div>
             <b>
               {" "}
               &nbsp;{(page - 1) * renderedRows + 1} -{" "}
@@ -68,9 +66,9 @@ export default class SemTableFooter extends Component {
                 : renderedRows * page}{" "}
               of {interalData.length}
             </b>
-          </HeaderCell>
-        </Row>
-      </Footer>
+          </th>
+        </tr>
+      </tfoot>
     );
   }
 }

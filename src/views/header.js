@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Table, Form, Input, Icon } from "semantic-ui-react";
-const { Header, HeaderCell, Row } = Table;
 export default class SemTableHeader extends Component {
   render() {
     var {
@@ -11,10 +9,10 @@ export default class SemTableHeader extends Component {
       direction
     } = this.props;
     return (
-      <Header>
-        <Row>
+      <thead>
+        <tr>
           {_.map(internalColumns, (c, i) => (
-            <HeaderCell
+            <th
               key={i}
               onClick={e => {
                 if (e.target.tagName !== "INPUT" && !c.blockSort)
@@ -23,30 +21,35 @@ export default class SemTableHeader extends Component {
             >
               <div style={{ paddingBottom: 8 }}>
                 {c.Header}{" "}
-                {column === c.accessor ? (
-                  <Icon
-                    name={direction == "ascending" ? "sort down" : "sort up"}
+                {column && column.accessor === c.accessor ? (
+                  <i
+                    aria-hidden="true"
+                    class={`${
+                      direction == "ascending" ? "sort down" : "sort up"
+                    } icon`}
                   />
                 ) : null}
               </div>
               {filterable && !c.hidefilter ? (
-                <Form autoComplete="off">
-                  <Input
-                    placeholder={c.Header}
-                    onChange={e => {
-                      tableModel.handleFilter({
-                        column: c,
-                        filter: e.target.value
-                      });
-                    }}
-                    type={c.type || "text"}
-                  />
-                </Form>
+                <form autoComplete="off" class="ui from">
+                  <div class="ui input">
+                    <input
+                      placeholder={c.Header}
+                      onChange={e => {
+                        tableModel.handleFilter({
+                          column: c,
+                          filter: e.target.value
+                        });
+                      }}
+                      type={c.type || "text"}
+                    />
+                  </div>
+                </form>
               ) : null}
-            </HeaderCell>
+            </th>
           ))}
-        </Row>
-      </Header>
+        </tr>
+      </thead>
     );
   }
 }

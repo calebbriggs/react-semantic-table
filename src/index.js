@@ -1,10 +1,8 @@
 import _ from "lodash";
 import React, { Component } from "react";
-import { Table, Loader, Dimmer } from "semantic-ui-react";
 import SemTableHeader from "./views/header";
 import SemTableFooter from "./views/footer";
 import { handleSort, getData, handleFilter } from "./functions";
-const { Row, Cell, Body } = Table;
 
 export default class SemTable extends Component {
   constructor(props) {
@@ -61,12 +59,18 @@ export default class SemTable extends Component {
       (page - 1) * renderedRows,
       renderedRows * page
     );
+
     return loading ? (
-      <Dimmer active>
-        <Loader content="Loading" />
-      </Dimmer>
+      <div
+        class="ui active transition visible dimmer"
+        style={{ display: "flex !important" }}
+      >
+        <div class="content">
+          <div class="ui text loader">Loading</div>
+        </div>
+      </div>
     ) : (
-      <Table sortable celled striped>
+      <table class="ui celled sortable striped table">
         <SemTableHeader
           internalColumns={internalColumns}
           column={column}
@@ -75,11 +79,11 @@ export default class SemTable extends Component {
           tableModel={this}
         />
 
-        <Body>
+        <tbody>
           {_.map(renderedData, (r, i) => (
-            <Row key={i + "row"}>
+            <tr key={i + "row"}>
               {_.map(internalColumns, (c, i) => (
-                <Cell key={i + "cell"}>
+                <td key={i + "cell"}>
                   {c.Cell
                     ? c.Cell({
                         value: this.getData({ column: c, data: r }),
@@ -87,14 +91,14 @@ export default class SemTable extends Component {
                         row: r
                       })
                     : this.getData({ column: c, data: r })}
-                </Cell>
+                </td>
               ))}
-            </Row>
+            </tr>
           ))}
           {aggregateRow ? (
-            <Row>
+            <tr>
               {_.map(internalColumns, (c, i) => (
-                <Cell key={i + "cell-aggregate"}>
+                <td key={i + "cell-aggregate"}>
                   {" "}
                   {c.type == "number" ? (
                     <div>
@@ -119,11 +123,11 @@ export default class SemTable extends Component {
                     </div>
                   ) : null}
                   {}
-                </Cell>
+                </td>
               ))}
-            </Row>
+            </tr>
           ) : null}
-        </Body>
+        </tbody>
         <SemTableFooter
           interalData={interalData}
           columns={columns}
@@ -132,7 +136,7 @@ export default class SemTable extends Component {
           csvExport={csvExport}
           tableModel={this}
         />
-      </Table>
+      </table>
     );
   }
 }
