@@ -12,6 +12,19 @@ export default class SemTableFooter extends Component {
       csvExport,
       tableModel
     } = this.props;
+    let exportData = interalData.map(d => {
+      var data = {};
+      columns = columns || [];
+      columns.forEach(col => {
+        var name = col.Header || col.accessor;
+        if (typeof col.accessor === "function") {
+          data[name] = col.accessor({ data: d });
+        } else {
+          data[name] = d[col.accessor];
+        }
+      });
+      return data;
+    });
     return (
       <Footer>
         <Row>
@@ -41,7 +54,7 @@ export default class SemTableFooter extends Component {
               </Menu.Item>
               {csvExport ? (
                 <Menu.Item icon title="Excel Download">
-                  <CSVLink data={interalData} filename={"data.csv"}>
+                  <CSVLink data={exportData} filename={"data.csv"}>
                     <Icon name="file excel" />
                   </CSVLink>
                 </Menu.Item>
