@@ -1,6 +1,6 @@
 {
   "name": "react-semantic-table",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "dependencies": {
     "moment": "^2.22.2",
     "react": "^16.4.1",
