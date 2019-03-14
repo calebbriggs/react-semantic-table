@@ -60,7 +60,9 @@ export default class SemTableFooter extends Component {
             </div>
             <b>
               {" "}
-              &nbsp;{(page - 1) * renderedRows + 1} -{" "}
+              &nbsp;{interalData.length
+                ? (page - 1) * renderedRows + 1
+                : 0} -{" "}
               {renderedRows * page > interalData.length
                 ? interalData.length
                 : renderedRows * page}{" "}

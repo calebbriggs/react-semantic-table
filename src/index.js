@@ -21,19 +21,19 @@ export default class SemTable extends Component {
     this.getData = getData;
     this.handleFilter = handleFilter;
   }
-
-  componentDidUpdate() {
+  updateData() {
     var { data, columns } = this.props;
-    if (this.state.data.length != data.length) {
-      var internalColumns = _.map(columns, c => {
-        if (typeof c === typeof "") {
-          var c = { Header: c, accessor: c };
-        }
-        c.accessor = c.accessor || c.Header;
-        return c;
-      });
-      this.setState({ data, interalData: data, internalColumns });
-    }
+    var internalColumns = _.map(columns, c => {
+      if (typeof c === typeof "") {
+        var c = { Header: c, accessor: c };
+      }
+      c.accessor = c.accessor || c.Header;
+      return c;
+    });
+    this.setState({ data, interalData: data, internalColumns });
+  }
+  componentDidMount() {
+    this.updateData();
   }
 
   render() {
