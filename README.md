@@ -8,6 +8,7 @@ example
 import React, { Component } from "react";
 import SemTable from "react-semantic-table";
 <SemTable
+    ref={table}
     filterable={true}
     data={data}
     loading={loading}
@@ -27,4 +28,16 @@ import SemTable from "react-semantic-table";
         { Header: "zip", accessor: "zip" }
     ]}
 />
+```
+
+if getting data from server
+
+```
+table = React.createRef();
+```
+
+after data is set
+
+```
+this.table.current.updateData();
 ```
