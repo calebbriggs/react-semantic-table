@@ -32,12 +32,18 @@ function getData({ data, column }) {
 
 //handles an array of filters for the table
 function handleFilter({ column, filter }) {
-  var { filters, data } = this.state;
-  var hasFilter = _.find(filters, { column });
+  var { filters } = this.state;
+  var hasFilter = _.find(filters, { column: { Header: column.Header } });
   if (hasFilter) {
     filters.splice(filters.indexOf(hasFilter));
   }
   if (filter) filters.push({ column, filter });
+
+  this.state.filters = filters;
+  filterUpdated.bind(this)();
+}
+function filterUpdated() {
+  var { filters, data } = this.state;
   var interalData = _.filter(data, d => {
     return _.every(filters, ({ column, filter }) => {
       if (column.type == "date") {
@@ -59,4 +65,4 @@ function handleFilter({ column, filter }) {
   });
   this.setState({ filters, interalData, page: 1 });
 }
-export { handleSort, getData, handleFilter };
+export { handleSort, getData, handleFilter, filterUpdated };

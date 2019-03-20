@@ -2,7 +2,7 @@ import _ from "lodash";
 import React, { Component } from "react";
 import SemTableHeader from "./views/header";
 import SemTableFooter from "./views/footer";
-import { handleSort, getData, handleFilter } from "./functions";
+import { handleSort, getData, handleFilter, filterUpdated } from "./functions";
 
 export default class SemTable extends Component {
   constructor(props) {
@@ -20,6 +20,7 @@ export default class SemTable extends Component {
     this.handleSort = handleSort;
     this.getData = getData;
     this.handleFilter = handleFilter;
+    this.filterUpdated = filterUpdated;
   }
   updateData() {
     var { data, columns } = this.props;
@@ -31,6 +32,7 @@ export default class SemTable extends Component {
       return c;
     });
     this.setState({ data, interalData: data, internalColumns });
+    this.filterUpdated();
   }
   componentDidMount() {
     this.updateData();
@@ -70,73 +72,76 @@ export default class SemTable extends Component {
         </div>
       </div>
     ) : (
-      <table class="ui celled sortable striped table">
-        <SemTableHeader
-          internalColumns={internalColumns}
-          column={column}
-          direction={direction}
-          filterable={filterable}
-          tableModel={this}
-        />
+      <div style={{ overflowX: "auto", marginTop: 8 }}>
+        <table class="ui celled sortable striped table">
+          <SemTableHeader
+            internalColumns={internalColumns}
+            column={column}
+            direction={direction}
+            filterable={filterable}
+            tableModel={this}
+          />
 
-        <tbody>
-          {_.map(renderedData, (r, i) => (
-            <tr key={i + "row"}>
-              {_.map(internalColumns, (c, i) => (
-                <td key={i + "cell"}>
-                  {c.Cell
-                    ? c.Cell({
-                        value: this.getData({ column: c, data: r }),
-                        column: c,
-                        row: r
-                      })
-                    : this.getData({ column: c, data: r })}
-                </td>
-              ))}
-            </tr>
-          ))}
-          {aggregateRow ? (
-            <tr>
-              {_.map(internalColumns, (c, i) => (
-                <td key={i + "cell-aggregate"}>
-                  {" "}
-                  {c.type == "number" ? (
-                    <div>
-                      <span>{c.aggregateLabel ? c.aggregateLabel : ""}</span>{" "}
-                      <span>
-                        {c.Cell
-                          ? c.Cell({
-                              value: _.reduce(
+          <tbody>
+            {_.map(renderedData, (r, i) => (
+              <tr key={i + "row"}>
+                {_.map(internalColumns, (c, i) => (
+                  <td key={i + "cell"}>
+                    {c.Cell
+                      ? c.Cell({
+                          value: this.getData({ column: c, data: r }),
+                          column: c,
+                          row: r
+                        })
+                      : this.getData({ column: c, data: r })}
+                  </td>
+                ))}
+              </tr>
+            ))}
+            {aggregateRow ? (
+              <tr>
+                {_.map(internalColumns, (c, i) => (
+                  <td key={i + "cell-aggregate"}>
+                    {" "}
+                    {c.type == "number" ? (
+                      <div>
+                        <span>{c.aggregateLabel ? c.aggregateLabel : ""}</span>{" "}
+                        <span>
+                          {c.Cell
+                            ? c.Cell({
+                                value: _.reduce(
+                                  interalData,
+                                  (sum, row) =>
+                                    sum +
+                                    +this.getData({ column: c, data: row }),
+                                  0
+                                )
+                              })
+                            : _.reduce(
                                 interalData,
                                 (sum, row) =>
                                   sum + +this.getData({ column: c, data: row }),
                                 0
-                              )
-                            })
-                          : _.reduce(
-                              interalData,
-                              (sum, row) =>
-                                sum + +this.getData({ column: c, data: row }),
-                              0
-                            )}
-                      </span>
-                    </div>
-                  ) : null}
-                  {}
-                </td>
-              ))}
-            </tr>
-          ) : null}
-        </tbody>
-        <SemTableFooter
-          interalData={interalData}
-          columns={columns}
-          renderedRows={renderedRows}
-          page={page}
-          csvExport={csvExport}
-          tableModel={this}
-        />
-      </table>
+                              )}
+                        </span>
+                      </div>
+                    ) : null}
+                    {}
+                  </td>
+                ))}
+              </tr>
+            ) : null}
+          </tbody>
+          <SemTableFooter
+            interalData={interalData}
+            columns={columns}
+            renderedRows={renderedRows}
+            page={page}
+            csvExport={csvExport}
+            tableModel={this}
+          />
+        </table>
+      </div>
     );
   }
 }
