@@ -1,13 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 export default class SemTableHeader extends Component {
   render() {
-    var {
-      internalColumns,
-      column,
-      filterable,
-      tableModel,
-      direction
-    } = this.props;
+    var { internalColumns, column, filterable, tableModel, direction } = this.props;
     var { filters } = tableModel.state;
     filters = filters || [];
     return (
@@ -19,24 +13,18 @@ export default class SemTableHeader extends Component {
               <th
                 key={i}
                 onClick={e => {
-                  if (e.target.tagName !== "INPUT" && !c.blockSort)
-                    tableModel.handleSort(c);
+                  if (e.target.tagName !== 'INPUT' && !c.blockSort) tableModel.handleSort(c);
                 }}
               >
                 <div style={{ paddingBottom: 8 }}>
-                  {c.Header}{" "}
+                  {c.Header}{' '}
                   {column && column.accessor === c.accessor ? (
-                    <i
-                      aria-hidden="true"
-                      class={`${
-                        direction == "ascending" ? "sort down" : "sort up"
-                      } icon`}
-                    />
+                    <i aria-hidden="true" className={`${direction == 'ascending' ? 'sort down' : 'sort up'} icon`} />
                   ) : null}
                 </div>
                 {filterable && !c.hidefilter ? (
                   <form autoComplete="off" class="ui from">
-                    <div class="ui input">
+                    <div className="ui input">
                       <input
                         placeholder={c.Header}
                         onChange={e => {
@@ -44,11 +32,11 @@ export default class SemTableHeader extends Component {
 
                           tableModel.handleFilter({
                             column: c,
-                            filter: val
+                            filter: val,
                           });
                         }}
-                        type={c.type || "text"}
-                        defaultValue={filter ? filter.filter : ""}
+                        type={c.type || 'text'}
+                        defaultValue={filter ? filter.filter : ''}
                       />
                     </div>
                   </form>
