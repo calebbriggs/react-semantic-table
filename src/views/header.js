@@ -23,7 +23,7 @@ export default class SemTableHeader extends Component {
                   ) : null}
                 </div>
                 {filterable && !c.hidefilter ? (
-                  <form autoComplete="off" class="ui from">
+                  <form autoComplete="off" className="ui form">
                     <div className="ui input">
                       <input
                         placeholder={c.Header}
