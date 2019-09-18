@@ -2,6 +2,7 @@
   "name": "react-semantic-table",
   "version": "0.1.17",
   "dependencies": {
+    "lodash": "^4.17.15",
     "moment": "^2.22.2",
     "react": "^16.4.1",
     "react-csv": "^1.0.19",
